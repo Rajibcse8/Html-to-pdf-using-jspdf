@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <div id="canvas_div_pdf">
+        <div id="content">
+
+
+            <div class="center">
+
+
+                <div class="d-flex">
+                    <div class="p-2 bg-info flex-fill">
+
+                        <div class="row justify-content-center align-self-center">
+
+
+                            <div class="card" style="width: 18rem;">
+
+                                <img src="./image/2.jpg" class="card-img-top" alt="..." style="height: 250px;" />
+                                <div class="card-body">
+                                    <h6 class="card-title">Name :</h6>
+                                    <h6 class="card-title">Roll No :</h6>
+                                    <h6 class="card-title">Class :</h6>
+                                    <h6 class="card-title">Section :</h6>
+                                    <h6 class="card-title">Blood Group :</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 bg-info flex-fill">
+
+                        <div class="row justify-content-center align-self-center">
+
+
+                            <div class="card" style="width: 18rem;">
+
+                                <img src="./image/2.png" class="card-img-top" alt="..." style="height: 250px;" />
+
+
+                                <div class="card-body ">
+                                    <h6 class="card-title ">Name :</h6>
+                                    <h6 class="card-title ">Roll No :</h6>
+                                    <h6 class="card-title ">Class :</h6>
+                                    <h6 class="card-title ">Section :</h6>
+                                    <h6 class="card-title ">Blood Group :</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <button id="showPdf">Generate PDF</button>
+    <button id="downloadPdf">Download PDF</button>
+	
+	<input type="hidden" id="base64">
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $('#showPdf').click(function() {
+            var pdf = new jsPDF();
+            pdf.addHTML($("#canvas_div_pdf"), function() {
+                var blob = pdf.output("blob");
+                window.open(URL.createObjectURL(blob));
+            });
+        });
+        /*
+        $('#downloadPdf').click(function() {
+            var pdf = new jsPDF();
+            pdf.addHTML($("#canvas_div_pdf"), function() {
+                pdf.save('pageContent.pdf');
+            });
+        }); 
+        */
+        $('#downloadPdf').click(function() {
+            var options = {};
+            var pdf = new jsPDF('p', 'pt', 'a4');
+            pdf.addHTML($("#canvas_div_pdf"), 15, 15, options, function() {
+                pdf.save('pageContent.pdf');
+            });
+        });
+
+
+        $('img').each(function() {
+			var c = document.createElement('canvas');
+			c.height = $(this).height();
+			c.width = $(this).width();
+			var ctx = c.getContext('2d');
+			ctx.drawImage(this, 0, 0, c.width, c.height);
+			var base64String = c.toDataURL();
+			$(this).attr('src',base64String);
+        });
+		
+		
+		
+		
+		
+    </script>
+
+
+
+
+</body>
+
+</html>
